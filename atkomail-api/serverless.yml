@@ -20,7 +20,7 @@ provider:
     ORIGINS: ${param:origins}
     FIXED_AUTH_SECRET: ${param:fixed-secret}
     DYNAMO_TABLE_NAME: { "Ref": "notifications" }
-    WEBSOCKET_API_ENDPOINT: !Join ['', [!Ref WebsocketsApi, '.execute-api.', "${self:provider.region}", '.amazonaws.com/', "${opt:stage, self:provider.stage, 'dev'}"]]
+    WEBSOCKET_API_ENDPOINT: !Join ['', [!Ref WebsocketsApi, '.execute-api.', "${aws:region}", '.amazonaws.com/', "${opt:stage, self:provider.stage, 'dev'}"]]
     MIX_PANEL_TOKEN: ${param:mix-panel-token}
   iam:
     role:
@@ -41,7 +41,7 @@ provider:
           Resource: 
             - "arn:aws:s3:::atkoemail"
             - { "Fn::GetAtt": ["notifications", "Arn"] }
-            - "arn:aws:ssm:${self:provider.region}:${param:aws-account-id}:parameter/${param:event-service-secretname}"
+            - "arn:aws:ssm:${aws:region}:${param:aws-account-id}:parameter/${param:event-service-secretname}"
 
 resources:
   Resources:
@@ -87,8 +87,6 @@ resources:
       Properties:
         AttributeDefinitions:
           - AttributeName: connectionId
-            AttributeType: S
-          - AttributeName: ttl
             AttributeType: S
         KeySchema:
           - AttributeName: connectionId
