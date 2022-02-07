@@ -14,14 +14,14 @@ provider:
   logs:
     websocket: true
   environment:
-    BUCKET: ${file(./config.${opt:stage, self:provider.stage, 'dev'}.json):bucket-name}
-    ISSUER: ${file(./config.${opt:stage, self:provider.stage, 'dev'}.json):issuer-uri}
-    AUDIENCE: ${file(./config.${opt:stage, self:provider.stage, 'dev'}.json):audience}
-    ORIGINS: ${file(./config.${opt:stage, self:provider.stage, 'dev'}.json):origins}
-    FIXED_AUTH_SECRET: ${file(./config.${opt:stage, self:provider.stage, 'dev'}.json):fixed-secret}
+    BUCKET: ${param:bucket-name}
+    ISSUER: ${param:issuer-uri}
+    AUDIENCE: ${param:audience}
+    ORIGINS: ${param:origins}
+    FIXED_AUTH_SECRET: ${param:fixed-secret}
     DYNAMO_TABLE_NAME: { "Ref": "notifications" }
     WEBSOCKET_API_ENDPOINT: !Join ['', [!Ref WebsocketsApi, '.execute-api.', "${self:provider.region}", '.amazonaws.com/', "${opt:stage, self:provider.stage, 'dev'}"]]
-    MIX_PANEL_TOKEN: ${file(./config.${opt:stage, self:provider.stage, 'dev'}.json):mix-panel-token}
+    MIX_PANEL_TOKEN: ${param:mix-panel-token}
   iam:
     role:
       statements:
@@ -41,7 +41,7 @@ provider:
           Resource: 
             - "arn:aws:s3:::atkoemail"
             - { "Fn::GetAtt": ["notifications", "Arn"] }
-            - "arn:aws:ssm:${self:provider.region}:${file(./config.${opt:stage, self:provider.stage, 'dev'}.json):aws-account-id}:parameter/atko-email/client_secret_jwt"
+            - "arn:aws:ssm:${self:provider.region}:${param:aws-account-id}:parameter/${param:event-service-secretname}"
 
 resources:
   Resources:
@@ -178,8 +178,8 @@ functions:
   userProfileEvent:
     handler: src/events/userProfileEvent.handler
     environment:
-      CLIENT_ID: ${file(./config.${opt:stage, self:provider.stage, 'dev'}.json):event-service-clientid}
-      EVENT_SERVICE_SECRET_NAME:  ${file(./config.${opt:stage, self:provider.stage, 'dev'}.json):event-service-secretname}
+      CLIENT_ID: ${param:event-service-clientid}
+      EVENT_SERVICE_SECRET_NAME:  ${param:event-service-secretname}
     events:
       - http:
           path: /events/userProfileEvent
