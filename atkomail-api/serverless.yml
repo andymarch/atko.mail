@@ -1,8 +1,6 @@
 org: andymarch
 app: atkomail-api
 service: atkomail-api
-
-frameworkVersion: '2'
 	
 provider:
   name: aws
