@@ -12,8 +12,17 @@ export const useDarkMode = () => {
     };
 
     useEffect(() => {
+
         const localTheme = window.localStorage.getItem('theme');
-        localTheme && setTheme(localTheme)
+        if(localTheme){
+            setTheme(localTheme)
+        } else {
+            var browserPreference = 'light'
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                browserPreference = 'dark'
+            }
+            setTheme(browserPreference)
+        }
     }, []);
     return [theme, themeToggler]
 };
