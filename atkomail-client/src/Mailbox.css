@@ -1,6 +1,3 @@
-.ui.list .list > .item a.header, .ui.list > .item a.header {
-    color: #00297A !important;
-}
 .address:hover{
     cursor: pointer;
 }
