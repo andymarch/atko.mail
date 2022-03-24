@@ -12,9 +12,9 @@
     "@middy/core": "^2.4.3",
     "@middy/http-cors": "^2.4.3",
     "@okta/jwt-verifier": "^2.3.0",
-    "@okta/okta-sdk-nodejs": "^6.1.0",
+    "@okta/okta-sdk-nodejs": "^6.2.0",
     "aws-sdk": "^2.954.0",
-    "mailparser": "^3.2.0",
+    "mailparser": "^3.3.0",
     "md5": "^2.3.0",
     "mixpanel": "^0.13.0",
     "winston": "^3.3.3"
