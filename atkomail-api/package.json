@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@middy/core": "^2.4.3",
+    "@middy/core": "^2.5.7",
     "@middy/http-cors": "^2.4.3",
     "@okta/jwt-verifier": "^2.3.0",
     "@okta/okta-sdk-nodejs": "^6.2.0",
